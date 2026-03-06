@@ -7,160 +7,129 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap" rel="stylesheet">
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            margin: 0; padding: 0; height: 100vh;
+            display: flex; justify-content: center; align-items: center;
             background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
-            font-family: 'Nunito', sans-serif;
-            overflow: hidden;
+            font-family: 'Nunito', sans-serif; overflow: hidden; user-select: none;
+            cursor: url('https://cur.cursors-4u.net/nature/nat-10/nat976.cur'), auto; /* Con trỏ hình bò nếu có */
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 50px 40px;
-            border-radius: 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-            text-align: center;
-            max-width: 90%;
-            width: 450px;
-            min-height: 400px; 
-            z-index: 10;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255,255,255,0.5);
-            position: relative; 
+            background: rgba(255, 255, 255, 0.9); padding: 50px 40px;
+            border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            text-align: center; max-width: 90%; width: 450px; min-height: 400px; 
+            z-index: 10; backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,0.5);
+            position: relative; transition: all 0.3s ease;
         }
 
-        .cow-icon {
-            font-size: 5rem;
-            margin-bottom: 20px;
-            animation: float 3s ease-in-out infinite;
-            display: inline-block;
-        }
+        .cow-icon { font-size: 5rem; margin-bottom: 20px; animation: float 3s ease-in-out infinite; display: inline-block; }
+        
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
+        h1 { color: #2c3e50; margin-bottom: 40px; font-size: 2.2rem; line-height: 1.4; }
 
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 40px;
-            font-size: 2.2rem;
-            line-height: 1.4;
-        }
-
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-        }
+        .btn-group { display: flex; justify-content: center; gap: 30px; }
 
         button {
-            padding: 15px 40px;
-            font-size: 1.5rem;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 900;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            z-index: 100; 
+            padding: 15px 40px; font-size: 1.5rem; font-family: 'Nunito', sans-serif;
+            font-weight: 900; border: none; border-radius: 50px; cursor: pointer;
+            transition: all 0.2s ease; color: white; text-transform: uppercase; z-index: 100; 
         }
 
-        #btn-yes {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            box-shadow: 0 10px 20px rgba(56, 239, 125, 0.4);
-        }
+        #btn-yes { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); box-shadow: 0 10px 20px rgba(56, 239, 125, 0.4); }
+        #btn-no { background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%); box-shadow: 0 10px 20px rgba(255, 75, 43, 0.4); position: relative; }
 
-        #btn-yes:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 25px rgba(56, 239, 125, 0.6);
-        }
+        /* Mưa bò bay */
+        .flying-cow { position: fixed; font-size: 3rem; bottom: -100px; animation: flyUp 3s linear forwards; z-index: 1; pointer-events: none; }
+        
+        @keyframes flyUp { to { transform: translateY(-130vh) translateX(50px) rotate(360deg); } }
 
-        #btn-no {
-            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
-            box-shadow: 0 10px 20px rgba(255, 75, 43, 0.4);
+        /* Watermark TikTok @daumagic */
+        .watermark {
+            position: fixed; bottom: 20px; left: 20px; font-size: 1rem; color: white;
+            font-weight: 700; z-index: 1000; text-decoration: none;
+            background: rgba(0, 0, 0, 0.4); padding: 10px 18px; border-radius: 25px;
+            backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex; align-items: center; gap: 10px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
-        .flying-cow {
-            position: fixed;
-            font-size: 3rem;
-            bottom: -100px;
-            animation: flyUp 3s linear forwards;
-            z-index: 1;
-        }
-
-        @keyframes flyUp {
-            to { transform: translateY(-130vh) translateX(50px) rotate(360deg); }
-        }
+        .watermark svg { filter: drop-shadow(1.5px 0px 0px #fd2e5e) drop-shadow(-1.5px 0px 0px #21d4ea); }
+        .watermark:hover { background: #000000; transform: scale(1.1) translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
 
         @media (max-width: 600px) {
             h1 { font-size: 1.8rem; }
             button { padding: 12px 30px; font-size: 1.2rem; }
-            .container { min-height: 350px; }
+            .watermark { font-size: 0.8rem; bottom: 15px; left: 15px; padding: 8px 12px; }
         }
     </style>
 </head>
-<body>
+<body onclick="playMoo()">
+
+    <a href="https://www.tiktok.com/@ureal15" target="_blank" class="watermark">
+        <svg width="18" height="18" viewBox="0 0 448 512" fill="currentColor"><path d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17h0A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z"/></svg>
+        @daumagic
+    </a>
 
     <audio id="troll-music" loop>
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
     </audio>
+    <audio id="moo-sound">
+        <source src="https://www.myinstants.com/media/sounds/cow-moo-sound-effect.mp3" type="audio/mpeg">
+    </audio>
 
     <div class="container" id="main-box">
         <div class="cow-icon">🐄</div>
-        <h1>Theo bạn, con bò có biết bay không?</h1>
-        <div class="btn-group">
+        <h1 id="question">Theo bạn, con bò có biết bay không?</h1>
+        <div class="btn-group" id="group-buttons">
             <button id="btn-yes" onclick="sayYes()">Có</button>
             <button id="btn-no">Không</button>
         </div>
     </div>
 
     <script>
+        const btnNo = document.getElementById("btn-no");
+        const container = document.getElementById("main-box");
+        const music = document.getElementById("troll-music");
+        const moo = document.getElementById("moo-sound");
+
+        // Tiếng bò kêu khi click bất kỳ đâu
+        function playMoo() {
+            moo.currentTime = 0;
+            moo.play().catch(() => {});
+        }
+
         function sayYes() {
-            // Phát nhạc
-            const music = document.getElementById("troll-music");
-            music.play().catch(e => console.log("Cần tương tác để phát nhạc"));
-
-            // Đổi nội dung
-            document.querySelector('h1').innerHTML = "Chính xác! Bạn là thiên tài! 🧠✨<br>Nhìn bầu trời kìa!";
+            music.play().catch(e => console.log("Cần tương tác"));
+            document.getElementById('question').innerHTML = "Chính xác! Bạn là thiên tài! 🧠✨<br>Nhìn bầu trời kìa!";
             document.querySelector('.cow-icon').innerText = "🛸";
-            document.querySelector('.btn-group').style.display = 'none';
+            document.getElementById('group-buttons').style.display = 'none';
+            
+            // Rung lắc màn hình nhẹ
+            container.style.animation = "shake 0.5s infinite";
 
-            // Tạo đàn bò bay
             setInterval(() => {
                 const cow = document.createElement('div');
                 cow.classList.add('flying-cow');
-                cow.innerText = ['🐄', '☁️', '🛸', '🐮', '🍔'][Math.floor(Math.random() * 5)];
+                cow.innerText = ['🐄', '☁️', '🛸', '🐮', '🍔', '✨'][Math.floor(Math.random() * 6)];
                 cow.style.left = Math.random() * 100 + 'vw';
                 cow.style.fontSize = (Math.random() * 3 + 2) + 'rem';
                 cow.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
                 document.body.appendChild(cow);
-
                 setTimeout(() => cow.remove(), 3500);
-            }, 150); 
+            }, 100); 
         }
 
-        const btnNo = document.getElementById("btn-no");
-        const container = document.getElementById("main-box");
-
+        // Logic nút chạy trốn
         const moveButton = (event) => {
             if (event.type === "touchstart") event.preventDefault(); 
-
             btnNo.style.position = "absolute";
-
             const maxLeft = container.clientWidth - btnNo.offsetWidth - 20;
             const maxTop = container.clientHeight - btnNo.offsetHeight - 20;
-
-            const randomLeft = Math.floor(Math.random() * (maxLeft - 20) + 20);
-            const randomTop = Math.floor(Math.random() * (maxTop - 20) + 20);
-
+            
+            // Random vị trí mới
+            const randomLeft = Math.floor(Math.random() * maxLeft);
+            const randomTop = Math.floor(Math.random() * maxTop);
+            
             btnNo.style.left = randomLeft + "px";
             btnNo.style.top = randomTop + "px";
         };
@@ -169,5 +138,15 @@
         btnNo.addEventListener("touchstart", moveButton); 
     </script>
 
+    <style>
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+        }
+    </style>
 </body>
 </html>
