@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Câu Hỏi Sinh Tử 🐄☁️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+            font-family: 'Nunito', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 50px 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 90%;
+            width: 450px;
+            min-height: 400px; 
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.5);
+            position: relative; 
+        }
+
+        .cow-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 40px;
+            font-size: 2.2rem;
+            line-height: 1.4;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 100; 
+        }
+
+        #btn-yes {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            box-shadow: 0 10px 20px rgba(56, 239, 125, 0.4);
+        }
+
+        #btn-yes:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 25px rgba(56, 239, 125, 0.6);
+        }
+
+        #btn-no {
+            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+            box-shadow: 0 10px 20px rgba(255, 75, 43, 0.4);
+        }
+
+        .flying-cow {
+            position: fixed;
+            font-size: 3rem;
+            bottom: -100px;
+            animation: flyUp 3s linear forwards;
+            z-index: 1;
+        }
+
+        @keyframes flyUp {
+            to { transform: translateY(-130vh) translateX(50px) rotate(360deg); }
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            button { padding: 12px 30px; font-size: 1.2rem; }
+            .container { min-height: 350px; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="troll-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container" id="main-box">
+        <div class="cow-icon">🐄</div>
+        <h1>Theo bạn, con bò có biết bay không?</h1>
+        <div class="btn-group">
+            <button id="btn-yes" onclick="sayYes()">Có</button>
+            <button id="btn-no">Không</button>
+        </div>
+    </div>
+
+    <script>
+        function sayYes() {
+            // Phát nhạc
+            const music = document.getElementById("troll-music");
+            music.play().catch(e => console.log("Cần tương tác để phát nhạc"));
+
+            // Đổi nội dung
+            document.querySelector('h1').innerHTML = "Chính xác! Bạn là thiên tài! 🧠✨<br>Nhìn bầu trời kìa!";
+            document.querySelector('.cow-icon').innerText = "🛸";
+            document.querySelector('.btn-group').style.display = 'none';
+
+            // Tạo đàn bò bay
+            setInterval(() => {
+                const cow = document.createElement('div');
+                cow.classList.add('flying-cow');
+                cow.innerText = ['🐄', '☁️', '🛸', '🐮', '🍔'][Math.floor(Math.random() * 5)];
+                cow.style.left = Math.random() * 100 + 'vw';
+                cow.style.fontSize = (Math.random() * 3 + 2) + 'rem';
+                cow.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+                document.body.appendChild(cow);
+
+                setTimeout(() => cow.remove(), 3500);
+            }, 150); 
+        }
+
+        const btnNo = document.getElementById("btn-no");
+        const container = document.getElementById("main-box");
+
+        const moveButton = (event) => {
+            if (event.type === "touchstart") event.preventDefault(); 
+
+            btnNo.style.position = "absolute";
+
+            const maxLeft = container.clientWidth - btnNo.offsetWidth - 20;
+            const maxTop = container.clientHeight - btnNo.offsetHeight - 20;
+
+            const randomLeft = Math.floor(Math.random() * (maxLeft - 20) + 20);
+            const randomTop = Math.floor(Math.random() * (maxTop - 20) + 20);
+
+            btnNo.style.left = randomLeft + "px";
+            btnNo.style.top = randomTop + "px";
+        };
+
+        btnNo.addEventListener("mouseover", moveButton);
+        btnNo.addEventListener("touchstart", moveButton); 
+    </script>
+
+</body>
+</html>
